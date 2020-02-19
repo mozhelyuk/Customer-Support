@@ -1,5 +1,6 @@
 package com.uncc.ticket.controller;
 
+import com.fasterxml.jackson.databind.deser.impl.FailingDeserializer;
 import com.uncc.ticket.model.UsersEntity;
 import org.springframework.validation.BindingResult;
 import com.uncc.ticket.model.TicketEntity;
@@ -52,14 +53,18 @@ public class TicketController {
 
     @RequestMapping(value = "/tickets/edit/{id}", method = RequestMethod.GET)
     public String editTicket(Model model,@PathVariable("id") Long id) {
-        // Code here
-        return "redirect:/"; //Remove this line
+
+        model.addAttribute("ticket", ticketService.findById(id));
+       return "tickets/storeTicket";
     }
 
     @RequestMapping(value = "/tickets/delete/{id}", method = RequestMethod.GET)
     public String deleteTicket(@PathVariable("id") Long id) {
         // Code here
-        return "redirect:/";
+        System.out.print("Are you sure?");
+
+         ticketService.deleteById(id);
+         return "deleted";
     }
 
 }
